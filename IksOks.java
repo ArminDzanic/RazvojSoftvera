@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 public class IksOks
 {
   public static void main(String[] args)
@@ -10,9 +11,14 @@ public class IksOks
 
     while(true)
     {
-      System.out.print("Player " + CurrentPlayer + " enter a cell number: ");
+      if(CheckForGameOver(Board))
+      {
+        System.out.println("Board is full. Game over. Tie");
+        break;
+      }
+      System.out.print("Player " + CurrentPlayer + " enter a cell number.");
       int cell = scanner.nextInt();
-      if(cell < 1 && cell > 9)
+      if(cell < 1 || cell > 9)
       {
         System.out.println("You picked the wrong number fool!");
         continue;
@@ -21,7 +27,7 @@ public class IksOks
       int col = (cell - 1) % 3;
       if(Board[row][col] != 0)
       {
-        System.out.println("Cell already occupied. Try again.");
+        System.out.println("Cell already occupied!");
         continue;
       }
       Board[row][col] = CurrentPlayer;
@@ -98,5 +104,20 @@ public class IksOks
       return true;
     }
     return false;
+  }
+
+  public static boolean CheckForGameOver(int[][] Board)
+  {
+    for(int i = 0; i < 3; ++i)
+    {
+      for(int j = 0; j < 3; ++j)
+      {
+        if(Board[i][j] == 0)
+        {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }
